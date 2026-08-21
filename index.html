@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PadZone | متجر الماوس باد الاحترافي</title>
+  <title>PadZone | متجر الماوس باد والتصميم</title>
   <style>
     :root {
       --bg-main: #060913;
@@ -49,7 +49,7 @@
       box-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
     }
 
-    /* القائمة الجانبية */
+    /* القائمة الجانبية التفاعلية */
     .sidebar {
       width: 260px;
       background: var(--bg-sidebar);
@@ -222,7 +222,7 @@
       box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
     }
 
-    /* أداة إنشاء وتصميم الماوس باد */
+    /* أداة تصميم الماوس باد */
     .customizer-box {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -276,44 +276,47 @@
       background: none;
     }
 
-    /* طرق الدفع */
+    /* الدفع وإدخال المبلغ */
+    .payment-box {
+      max-width: 550px;
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      margin: 0 auto;
+    }
+
     .payments-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
     }
 
     .pay-card {
-      background: var(--card-bg);
+      background: var(--bg-sidebar);
       border: 1px solid var(--border-color);
-      padding: 20px;
+      padding: 15px;
       border-radius: 12px;
       text-align: center;
       cursor: pointer;
       transition: 0.3s;
     }
 
-    .pay-card:hover {
+    .pay-card.selected, .pay-card:hover {
       border-color: var(--glow-blue);
-      background: rgba(0, 102, 255, 0.05);
+      background: rgba(0, 102, 255, 0.15);
     }
 
     .pay-icon {
-      font-size: 30px;
-      margin-bottom: 8px;
+      font-size: 28px;
+      margin-bottom: 5px;
     }
 
-    /* نموذج اتصل بنا */
-    .contact-form {
-      max-width: 550px;
-      background: var(--card-bg);
-      padding: 25px;
-      border-radius: 14px;
-      border: 1px solid var(--border-color);
-    }
-
+    /* النماذج والمدخلات */
     .form-group {
       margin-bottom: 18px;
+      text-align: right;
     }
 
     .form-group label {
@@ -330,7 +333,7 @@
       border: 1px solid var(--border-color);
       border-radius: 8px;
       color: #fff;
-      font-size: 14px;
+      font-size: 15px;
       outline: none;
       transition: 0.25s;
     }
@@ -338,6 +341,27 @@
     .form-group input:focus, .form-group textarea:focus {
       border-color: var(--glow-blue);
       box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+    }
+
+    /* بطاقة التواصل */
+    .contact-card {
+      max-width: 550px;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      text-align: center;
+      margin: 0 auto 25px auto;
+    }
+
+    .phone-number {
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--glow-blue);
+      margin: 15px 0;
+      direction: ltr;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
     }
 
     /* التجاوب مع الهاتف المحمول */
@@ -367,7 +391,7 @@
 </head>
 <body>
 
-  <!-- زر الشاشات الصغيرة -->
+  <!-- زر القائمة للشاشات الصغيرة -->
   <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
 
   <!-- القائمة الجانبية -->
@@ -378,8 +402,8 @@
     <ul class="nav-links">
       <li><a href="#" class="active" onclick="switchTab('store', this)">🛒 المتجر الرئيسي</a></li>
       <li><a href="#" onclick="switchTab('custom', this)">🎨 صمم ماوس باد</a></li>
-      <li><a href="#" onclick="switchTab('payment', this)">💳 طرق الدفع</a></li>
-      <li><a href="#" onclick="switchTab('contact', this)">📬 اتصل بنا</a></li>
+      <li><a href="#" onclick="switchTab('payment', this)">💳 إدخال المبلغ والدفع</a></li>
+      <li><a href="#" onclick="switchTab('contact', this)">📞 اتصل بنا والرقم</a></li>
     </ul>
   </aside>
 
@@ -437,38 +461,48 @@
       </div>
     </section>
 
-    <!-- قسم طرق الدفع -->
+    <!-- قسم طرق الدفع وإدخال المبلغ -->
     <section id="payment" class="section">
-      <h2 class="section-title">طرق الدفع ومكان السداد</h2>
-      <p class="section-desc">نوفر طرق دفع متعددة وآمنة تناسب جميع الاحتياجات.</p>
+      <h2 class="section-title">طرق الدفع وإدخال المبلغ</h2>
+      <p class="section-desc">اختر طريقة الدفع المفضل لديك وأدخل المبلغ المراد تسديده.</p>
       
-      <div class="payments-grid">
-        <div class="pay-card">
-          <div class="pay-icon">💳</div>
-          <h3>البطاقات الائتمانية</h3>
-          <p style="color: var(--text-muted); font-size: 13px; margin-top:5px;">Visa / Mastercard / Mada</p>
+      <div class="payment-box">
+        <div class="payments-grid">
+          <div class="pay-card selected" onclick="selectPayment(this)">
+            <div class="pay-icon">🅿️</div>
+            <h3>PayPal</h3>
+          </div>
+
+          <div class="pay-card" onclick="selectPayment(this)">
+            <div class="pay-icon">💳</div>
+            <h3>دفع إلكتروني</h3>
+          </div>
         </div>
 
-        <div class="pay-card">
-          <div class="pay-icon">🅿️</div>
-          <h3>PayPal</h3>
-          <p style="color: var(--text-muted); font-size: 13px; margin-top:5px;">دفع سريع وأمن عبر الإنترنت</p>
-        </div>
-
-        <div class="pay-card">
-          <div class="pay-icon">📲</div>
-          <h3>Apple Pay</h3>
-          <p style="color: var(--text-muted); font-size: 13px; margin-top:5px;">الدفع المباشر بنقرة واحدة</p>
-        </div>
+        <form onsubmit="event.preventDefault(); processPayment();">
+          <div class="form-group">
+            <label>المبلغ المراد دفعه ($)</label>
+            <input type="number" id="amountInput" placeholder="أدخل المبلغ مثل: 50" min="1" step="any" required>
+          </div>
+          <button type="submit" class="btn">تأكيد ومتابعة الدفع</button>
+        </form>
       </div>
     </section>
 
-    <!-- قسم اتصل بنا -->
+    <!-- قسم اتصل بنا والرقم -->
     <section id="contact" class="section">
-      <h2 class="section-title">اتصل بنا</h2>
-      <p class="section-desc">هل لديك أي استفسار؟ تواصل معنا مباشرة وسنرد عليك في أسرع وقت.</p>
+      <h2 class="section-title">التواصل والدعم الفني</h2>
+      <p class="section-desc">يمكنك التواصل معنا عبر الرقم المباشر أو عبر النموذج التالي:</p>
+
+      <!-- بطاقة الرقم المخصص -->
+      <div class="contact-card">
+        <p style="color: var(--text-muted);">رقم التواصل الرسمي / الواتساب:</p>
+        <div class="phone-number">96211033</div>
+        <a href="tel:96211033" class="btn" style="display: inline-block; text-decoration: none; width: auto; padding: 10px 25px;">إجراء اتصال مباشر</a>
+      </div>
       
-      <form class="contact-form" onsubmit="event.preventDefault(); alert('تم إرسال رسالتك بنجاح!');">
+      <!-- نموذج اتصل بنا -->
+      <form class="contact-card" style="text-align: right;" onsubmit="event.preventDefault(); alert('تم إرسال رسالتك بنجاح!');">
         <div class="form-group">
           <label>الاسم كامل</label>
           <input type="text" placeholder="اكتب اسمك هنا" required>
@@ -479,7 +513,7 @@
         </div>
         <div class="form-group">
           <label>الرسالة</label>
-          <textarea rows="5" placeholder="اكتب استفسارك أو طلبك هنا..." required></textarea>
+          <textarea rows="4" placeholder="اكتب استفسارك هنا..." required></textarea>
         </div>
         <button type="submit" class="btn">إرسال الرسالة</button>
       </form>
@@ -488,7 +522,7 @@
   </main>
 
   <script>
-    // التنقل بين أقسام الصفحة
+    // التنقل بين الأقسام
     function switchTab(tabId, element) {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
@@ -496,7 +530,6 @@
       document.getElementById(tabId).classList.add('active');
       element.classList.add('active');
 
-      // إغلاق القائمة الجانبية في الهواتف بعد الاختيار
       document.getElementById('sidebar').classList.remove('open');
     }
 
@@ -513,7 +546,7 @@
       document.getElementById('previewText').style.display = 'none';
     }
 
-    // رفع صورة ومعاينتها داخل الماوس باد
+    // رفع صورة ومعاينتها
     function previewImage(event) {
       const reader = new FileReader();
       reader.onload = function() {
@@ -524,6 +557,18 @@
       if (event.target.files[0]) {
         reader.readAsDataURL(event.target.files[0]);
       }
+    }
+
+    // تحديد طريقة الدفع
+    function selectPayment(element) {
+      document.querySelectorAll('.pay-card').forEach(c => c.classList.remove('selected'));
+      element.classList.add('selected');
+    }
+
+    // معالجة عملية الدفع
+    function processPayment() {
+      const amount = document.getElementById('amountInput').value;
+      alert(`تم توجيه طلب الدفع لمبلغ: $${amount}`);
     }
   </script>
 </body>
