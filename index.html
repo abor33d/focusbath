@@ -1,92 +1,530 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>تطوير الذات</title>
- <style>
- body {
- font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
- margin: 0;
- padding: 0;
- background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
- background-size: 400% 400%;
- animation: gradient 15s ease infinite;
- color: #333;
- text-align: center;
- min-height: 100vh;
- }
- @keyframes gradient {
- 0% { background-position: 0% 50%; }
- 50% { background-position: 100% 50%; }
- 100% { background-position: 0% 50%; }
- }
- header {
- background-color: rgba(255, 255, 255, 0.95);
- padding: 15px 0;
- box-shadow: 0 4px 15px rgba(0,0,0,0.2);
- border-radius: 0 0 20px 20px;
- }
- nav ul {
- list-style-type: none;
- padding: 0;
- margin: 0;
- display: flex;
- justify-content: center;
- gap: 30px;
- }
- nav ul li a {
- display: block;
- color: #333;
- padding: 10px 25px;
- text-decoration: none;
- font-weight: bold;
- border-radius: 50px;
- transition: all 0.3s ease;
- }
- nav ul li a:hover {
- background-color: #23a6d5;
- color: white;
- transform: translateY(-3px);
- box-shadow: 0 4px 10px rgba(0,0,0,0.2);
- }
- main {
- padding: 100px 20px;
- display: flex;
- flex-direction: column;
- align-items: center;
- }
- h1 {
- color: #fff;
- text-shadow: 3px 5px 10px rgba(0,0,0,0.3);
- margin-bottom: 20px;
- font-size: 3rem;
- }
- p {
- background-color: rgba(255, 255, 255, 0.95);
- padding: 30px;
- border-radius: 20px;
- box-shadow: 0 10px 20px rgba(0,0,0,0.15);
- max-width: 700px;
- font-size: 1.3rem;
- line-height: 1.6;
- color: #555;
- }
- </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PadZone | متجر الماوس باد الاحترافي</title>
+  <style>
+    :root {
+      --bg-main: #060913;
+      --bg-sidebar: #0b1329;
+      --card-bg: #111a33;
+      --accent-blue: #0066ff;
+      --glow-blue: #00d2ff;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: #1e2d54;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* زر القائمة للشاشات الصغيرة */
+    .mobile-toggle {
+      display: none;
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 1000;
+      background: var(--accent-blue);
+      color: #fff;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+    }
+
+    /* القائمة الجانبية */
+    .sidebar {
+      width: 260px;
+      background: var(--bg-sidebar);
+      padding: 25px 20px;
+      border-left: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      transition: transform 0.3s ease;
+      z-index: 999;
+    }
+
+    /* اللوجو المتحرك */
+    .logo-container {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 2px;
+      display: inline-block;
+      position: relative;
+      animation: logoGlow 2.5s infinite alternate ease-in-out;
+      cursor: pointer;
+    }
+
+    @keyframes logoGlow {
+      0% {
+        text-shadow: 0 0 5px var(--accent-blue), 0 0 10px var(--accent-blue);
+        transform: scale(1);
+      }
+      100% {
+        text-shadow: 0 0 15px var(--glow-blue), 0 0 30px var(--glow-blue);
+        transform: scale(1.04);
+      }
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .nav-links li a {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 14px 18px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .nav-links li a:hover, .nav-links li a.active {
+      background: rgba(0, 102, 255, 0.15);
+      color: #fff;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 15px rgba(0, 102, 255, 0.2);
+      transform: translateX(-4px);
+    }
+
+    /* المحتوى الرئيسي */
+    .main-content {
+      flex: 1;
+      padding: 35px;
+      overflow-y: auto;
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.35s ease-out;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: #fff;
+      border-right: 4px solid var(--accent-blue);
+      padding-right: 12px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+
+    /* شبكة المنتجات */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--glow-blue);
+      box-shadow: 0 10px 30px rgba(0, 210, 255, 0.15);
+    }
+
+    .card-img-placeholder {
+      width: 100%;
+      height: 150px;
+      background: #0b1120;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--glow-blue);
+      font-weight: bold;
+      border: 1px dashed var(--border-color);
+    }
+
+    .card-title {
+      font-size: 17px;
+      margin: 12px 0 6px;
+    }
+
+    .card-price {
+      color: var(--glow-blue);
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      background: var(--accent-blue);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn:hover, .btn:active {
+      background: var(--glow-blue);
+      color: #000;
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+    }
+
+    /* أداة إنشاء وتصميم الماوس باد */
+    .customizer-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 25px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .pad-preview {
+      width: 100%;
+      height: 250px;
+      margin: 20px 0;
+      border: 2px dashed var(--accent-blue);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .controls-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .color-picker-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-sidebar);
+      padding: 8px 15px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    input[type="color"] {
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      background: none;
+    }
+
+    /* طرق الدفع */
+    .payments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+    }
+
+    .pay-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .pay-card:hover {
+      border-color: var(--glow-blue);
+      background: rgba(0, 102, 255, 0.05);
+    }
+
+    .pay-icon {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    /* نموذج اتصل بنا */
+    .contact-form {
+      max-width: 550px;
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      background: var(--bg-sidebar);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: 0.25s;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--glow-blue);
+      box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+    }
+
+    /* التجاوب مع الهاتف المحمول */
+    @media (max-width: 768px) {
+      .mobile-toggle {
+        display: block;
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100%;
+        transform: translateX(100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+        box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+      }
+
+      .main-content {
+        padding: 70px 20px 20px;
+      }
+    }
+  </style>
 </head>
 <body>
- <header>
- <nav>
- <ul>
- <li><a href="#">الرئيسية</a></li>
- <li><a href="#">الخدمات</a></li>
- <li><a href="#">اتصل بنا</a></li>
- </ul>
- </nav>
- </header>
- <main>
- <h1>أهلاً بك في رحلتك لتطوير الذات</h1>
- <p>هذا الموقع مخصص لمساعدتك على النمو وتحقيق أهدافك.</p>
- </main>
+
+  <!-- زر الشاشات الصغيرة -->
+  <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+
+  <!-- القائمة الجانبية -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo-container">
+      <div class="logo">PADZONE</div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="active" onclick="switchTab('store', this)">🛒 المتجر الرئيسي</a></li>
+      <li><a href="#" onclick="switchTab('custom', this)">🎨 صمم ماوس باد</a></li>
+      <li><a href="#" onclick="switchTab('payment', this)">💳 طرق الدفع</a></li>
+      <li><a href="#" onclick="switchTab('contact', this)">📬 اتصل بنا</a></li>
+    </ul>
+  </aside>
+
+  <!-- المحتوى الرئيسي -->
+  <main class="main-content">
+
+    <!-- قسم المتجر الرئيسي -->
+    <section id="store" class="section active">
+      <h2 class="section-title">المتجر الرئيسي</h2>
+      <p class="section-desc">اختر من بين تشكيلات الماوس باد المخصصة للألعاب والإنتاجية.</p>
+      
+      <div class="grid">
+        <div class="card">
+          <div class="card-img-placeholder">Neon Cyber 90x40</div>
+          <h3 class="card-title">ماوس باد Cyberpunk</h3>
+          <div class="card-price">$29.99</div>
+          <button class="btn">إضافة للسلّة</button>
+        </div>
+
+        <div class="card">
+          <div class="card-img-placeholder">Dark Matter Control</div>
+          <h3 class="card-title">ماوس باد Dark Matter</h3>
+          <div class="card-price">$24.99</div>
+          <button class="btn">إضافة للسلّة</button>
+        </div>
+
+        <div class="card">
+          <div class="card-img-placeholder">Speed Edition XL</div>
+          <h3 class="card-title">ماوس باد Speed Master</h3>
+          <div class="card-price">$34.99</div>
+          <button class="btn">إضافة للسلّة</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- قسم إنشاء وتصميم ماوس باد -->
+    <section id="custom" class="section">
+      <h2 class="section-title">استوديو التصميم</h2>
+      <p class="section-desc">خصص الماوس باد الخاصة بك بالكامل عبر رفع صورة أو اختيار لونك المفضل.</p>
+      
+      <div class="customizer-box">
+        <div class="pad-preview" id="padPreview">
+          <span id="previewText" style="color: var(--text-muted);">المعاينة الحية لتصميمك</span>
+        </div>
+
+        <div class="controls-group">
+          <div class="color-picker-wrapper">
+            <label for="colorPicker">اختر لون الأساس:</label>
+            <input type="color" id="colorPicker" value="#0066ff" onchange="changePadColor(this.value)">
+          </div>
+
+          <input type="file" id="imageUpload" accept="image/*" onchange="previewImage(event)" style="display:none;">
+          <button class="btn" style="width: auto;" onclick="document.getElementById('imageUpload').click()">📁 رفع صورة</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- قسم طرق الدفع -->
+    <section id="payment" class="section">
+      <h2 class="section-title">طرق الدفع ومكان السداد</h2>
+      <p class="section-desc">نوفر طرق دفع متعددة وآمنة تناسب جميع الاحتياجات.</p>
+      
+      <div class="payments-grid">
+        <div class="pay-card">
+          <div class="pay-icon">💳</div>
+          <h3>البطاقات الائتمانية</h3>
+          <p style="color: var(--text-muted); font-size: 13px; margin-top:5px;">Visa / Mastercard / Mada</p>
+        </div>
+
+        <div class="pay-card">
+          <div class="pay-icon">🅿️</div>
+          <h3>PayPal</h3>
+          <p style="color: var(--text-muted); font-size: 13px; margin-top:5px;">دفع سريع وأمن عبر الإنترنت</p>
+        </div>
+
+        <div class="pay-card">
+          <div class="pay-icon">📲</div>
+          <h3>Apple Pay</h3>
+          <p style="color: var(--text-muted); font-size: 13px; margin-top:5px;">الدفع المباشر بنقرة واحدة</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- قسم اتصل بنا -->
+    <section id="contact" class="section">
+      <h2 class="section-title">اتصل بنا</h2>
+      <p class="section-desc">هل لديك أي استفسار؟ تواصل معنا مباشرة وسنرد عليك في أسرع وقت.</p>
+      
+      <form class="contact-form" onsubmit="event.preventDefault(); alert('تم إرسال رسالتك بنجاح!');">
+        <div class="form-group">
+          <label>الاسم كامل</label>
+          <input type="text" placeholder="اكتب اسمك هنا" required>
+        </div>
+        <div class="form-group">
+          <label>البريد الإلكتروني</label>
+          <input type="email" placeholder="name@example.com" required>
+        </div>
+        <div class="form-group">
+          <label>الرسالة</label>
+          <textarea rows="5" placeholder="اكتب استفسارك أو طلبك هنا..." required></textarea>
+        </div>
+        <button type="submit" class="btn">إرسال الرسالة</button>
+      </form>
+    </section>
+
+  </main>
+
+  <script>
+    // التنقل بين أقسام الصفحة
+    function switchTab(tabId, element) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      element.classList.add('active');
+
+      // إغلاق القائمة الجانبية في الهواتف بعد الاختيار
+      document.getElementById('sidebar').classList.remove('open');
+    }
+
+    // فتح وإغلاق القائمة الجانبية للشاشات الصغيرة
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+    }
+
+    // تغيير لون المعاينة
+    function changePadColor(color) {
+      const preview = document.getElementById('padPreview');
+      preview.style.backgroundImage = 'none';
+      preview.style.backgroundColor = color;
+      document.getElementById('previewText').style.display = 'none';
+    }
+
+    // رفع صورة ومعاينتها داخل الماوس باد
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function() {
+        const preview = document.getElementById('padPreview');
+        preview.style.backgroundImage = `url('${reader.result}')`;
+        document.getElementById('previewText').style.display = 'none';
+      }
+      if (event.target.files[0]) {
+        reader.readAsDataURL(event.target.files[0]);
+      }
+    }
+  </script>
 </body>
 </html>
